@@ -1,5 +1,5 @@
 const baseConfig = {
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:8088'
 }
 
 export default baseConfig
