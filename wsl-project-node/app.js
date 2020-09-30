@@ -7,6 +7,7 @@ var logger = require('morgan');
 var loginRouter = require('./routes/login');
 
 var app = express();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -17,21 +18,40 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// catch 404 and forward to error handler
-// 设置请求头 creatby silin.wang 2020-09-15
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*"); 
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next(createError(404));
+app.use('/login', loginRouter);
+
+//设置跨域访问
+app.all('*', function (req, res, next) {
+  if (req.method.toLowerCase() == 'options') {
+    res.send(200);  //让options尝试请求快速结束
+  }
+  else {
+    next();
+    }
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods","*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Content-Type", "application/json/text/html;charset=UTF-8");
+    next();
 });
 
-app.use('/login2', loginRouter);
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404));
+});
 
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // // 指定了该响应的资源是否被允许与给定的origin共享 跨域
+  // res.header("Access-Control-Allow-Origin", "*");
+  // // 明确了客户端所要访问的资源允许使用的方法或方法列表
+  // res.header('Access-Control-Allow-Methods', '*');
+  // // 告诉客户端实际返回的内容的内容类型
+  // res.header("Access-Control-Allow-Headers", "Content-Type: application/json/text/html; charset=UTF-8, X-Requested-With, xCors, Origin, Accept");
 
   // render the error page
   res.status(err.status || 500);
