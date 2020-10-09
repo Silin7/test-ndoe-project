@@ -35,7 +35,7 @@
               name: this.dataForm.name,
               password: this.dataForm.password
             }
-            api.apiLogin(req, function (res) {
+            api.get_register(req, function (res) {
               if (res && res.data.code === 0) {
                 alert('注册成功')
               } else {

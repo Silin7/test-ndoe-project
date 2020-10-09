@@ -1,15 +1,15 @@
 import axios from 'axios'
 
 let login = {
-  apiLogin: function (params, cb) {
-    axios.get('/login/register?name=' + params.name + '&password=' + params.password).then((res) => {
+  get_register: function (params, cb) {
+    axios.get('/login/get_register?name=' + params.name + '&password=' + params.password).then((res) => {
       cb(res)
     }).catch((error) => {
       return Promise.reject(error)
     })
   },
-  apiLogin2: function (params, cb) {
-    axios.post('/login/register2', params).then((res) => {
+  post_register: function (params, cb) {
+    axios.post('/login/post_register', params).then((res) => {
       cb(res)
     }).catch((error) => {
       return Promise.reject(error)
