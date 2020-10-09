@@ -45,14 +45,6 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // // 指定了该响应的资源是否被允许与给定的origin共享 跨域
-  // res.header("Access-Control-Allow-Origin", "*");
-  // // 明确了客户端所要访问的资源允许使用的方法或方法列表
-  // res.header('Access-Control-Allow-Methods', '*');
-  // // 告诉客户端实际返回的内容的内容类型
-  // res.header("Access-Control-Allow-Headers", "Content-Type: application/json/text/html; charset=UTF-8, X-Requested-With, xCors, Origin, Accept");
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');
