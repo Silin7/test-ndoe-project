@@ -18,22 +18,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/login', loginRouter);
+app.use('/api/login', loginRouter);
 
 //设置跨域访问
-app.all('*', function (req, res, next) {
-  if (req.method.toLowerCase() == 'options') {
-    res.send(200);  //让options尝试请求快速结束
-  }
-  else {
-    next();
-    }
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods","*");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Content-Type", "application/json/text/html;charset=UTF-8");
-    next();
-});
+// app.all('*', (req, res, next) => {
+//   console.log('设置跨域访问')
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   res.header("Access-Control-Allow-Methods","*");
+//   res.header("X-Powered-By",' 3.2.1')
+//   res.header("Content-Type", "*");
+//   // res.header("Content-Type", "application/json/html;charset=utf-8");
+//   next();
+// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -45,9 +42,12 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  
   // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
+
+console.log('服务器启动成功......')
 
 module.exports = app;
