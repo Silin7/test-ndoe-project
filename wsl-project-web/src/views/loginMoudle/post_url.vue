@@ -30,7 +30,6 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
             let req = {
               name: this.dataForm.name,
               password: this.dataForm.password
