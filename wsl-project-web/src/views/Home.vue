@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import api from '@/api/api'
 import verificationCode from '../components/login/yzm.vue'
 export default {
   name: 'Home',
@@ -52,8 +53,6 @@ export default {
     'verification-code': verificationCode
   },
   mounted () {
-    sessionStorage.setItem("logonStatus", "0")
-    this.getInformation()
     this.randomStr()
   },
   data() {
@@ -84,39 +83,27 @@ export default {
         this.isRouterAlive = true;
       })
     },
-    // 获取本地存储信息
-    getInformation() {
-      let loginInformation = localStorage.getItem('loginInformation')
-      loginInformation = JSON.parse(loginInformation)
-      if (!loginInformation || loginInformation === null || loginInformation === '') {
-        console.log('系统错误，请联系管理员')
-      } else {
-        this.local.name = loginInformation.userName
-        this.local.password = loginInformation.password
-      }
-    },
     // 确认按钮
     submitForm(formName) {
+      let _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          if (this.local.name) {
-            if (this.ruleForm.loginName !== this.local.name || this.ruleForm.pass !== this.local.password) {
-              alert("用户名或密码不正确")
-              this.randomStr()
-            } else if (this.ruleForm.yzPass.toLowerCase() !== this.randomNumber.toLowerCase()) {
-              alert("验证码错误")
-              this.randomStr()
+          api.get_loginInfo(function(res) {
+            if(res.data.code !== 0 || res.data.data.length === 0) {
+              alert("您还没有注册账号，请先注册哟！")
             } else {
-              // 添加登录状态logonStatus
-              sessionStorage.setItem("logonStatus", "1")
-              this.$router.push({ name: 'navigation' })
-              this.randomStr()
+              let data = {
+                name: _this.ruleForm.loginName,
+                password: _this.ruleForm.pass,
+              }
+              api.post_login(data, function(res) {
+                if (res.data.code === 0) {
+                  console.log(res)
+                }
+              })
             }
-          } else {
-            alert("账户丢失，请前往注册页面进行注册")
-          }
+          })
         } else {
-          console.log('error submit!!');
           this.randomStr()
           return false;
         }
