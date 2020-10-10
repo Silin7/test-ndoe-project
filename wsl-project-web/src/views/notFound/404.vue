@@ -21,6 +21,9 @@ html,body {
   overflow: hidden;
   background:#ececec;;
 }
+a {
+  text-decoration:none
+}
 .heading {
   text-align: center;
   font-size: 9em;
