@@ -1,0 +1,40 @@
+.el-header {
+  background-color: #B3C0D1;
+  color: #333;
+  line-height: 60px;
+  padding-left: 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.main-header {
+  height: 6vh !important;
+  font-size: 12px;
+  text-align: right;
+}
+.headLiftBox {
+  width: 200px;
+  height: 100%;
+  background-color: rgb(236, 140, 140);
+}
+.headRightBox {
+  display: flex;
+  height: 100%;
+  width: 100px;
+  justify-content: flex-end;
+  align-items: center;
+  .txImg {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+}
+.main-container {
+  height: 80vh !important;
+  overflow: auto;
+  background-color: rgb(155, 193, 243);
+}
+.main-footer {
+  height: 14vh !important;
+  background-color: #B3C0D1;
+}

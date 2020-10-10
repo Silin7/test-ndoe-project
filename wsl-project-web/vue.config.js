@@ -1,7 +1,5 @@
-
-
 module.exports = {
-  /* 部署生产环境和开发环境下的URL：可对当前环境进行区分，baseUrl 从 Vue CLI 3.3 起已弃用，要使用publicPath */
+  /* 部署生产环境和开发环境下的URL：可对当前环境进行区分，baseUrl 从 Vue CLI 3.3 起已弃用，要使用publicPath */ 
   /* baseUrl: process.env.NODE_ENV === 'production' ? './' : '/' */
   publicPath: process.env.NODE_ENV === 'production' ? '/public/' : './',
   /* 输出文件目录：在npm run build时，生成文件的目录名称 */
@@ -20,27 +18,17 @@ module.exports = {
       open: true,
       /* 设置为0.0.0.0则所有的地址均能访问 */
       host: '0.0.0.0',
-      port: 8089,
+      port: 7777,
       https: false,
       hotOnly: false,
       /* 使用代理 */
       proxy: {
-        // '/': {
-        //     /* 目标代理服务器地址 */
-        //     target: 'http://localhost:3000',
-        //     /* 允许跨域 */
-        //     changeOrigin: true,
-        // },
-        '/api': {
-          target: 'http://localhost:3000',  //这里后台的地址模拟的;应该填写你们真实的后台接口
-          changOrigin: true,  //允许跨域
-          pathRewrite: {
-            /* 重写路径，当我们在浏览器中看到请求的地址为：http://localhost:8080/api/core/getData/userInfo 时
-              实际上访问的地址是：http://121.121.67.254:8185/core/getData/userInfo,因为重写了 /api
-             */
-            '^/api': '' 
-          }
-        },
+          '/api': {
+              /* 目标代理服务器地址 */
+              target: 'http://47.100.47.3/',
+              /* 允许跨域 */
+              changeOrigin: true,
+          },
       },
   },
 }
