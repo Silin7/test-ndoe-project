@@ -5,16 +5,14 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
   const routes = [
-    { path: '/', name: 'Home', component: Home }, 
-    { path: "/404", name: "404", component: () => import('../views/notFound/404.vue') },
-    { path: '/home', name: 'home', component: () => import('../views/Home.vue') },
-    { path: '/event-bus', name: 'event-bus', component: () => import('../views/event-bus/event-bus.vue') },
-
-    { path: '/get_url', name: 'get_url', component: () => import('../views/loginMoudle/get_url.vue') },
-    { path: '/post_url', name: 'post_url', component: () => import('../views/loginMoudle/post_url.vue') },
-    // 重定向404，此处需特别注意置于最底部 
-    { path: "*", redirect: "/404" }
-  ]
+  { path: '/', name: 'Home', component: Home },
+  { path: '/home', name: 'home', component: () => import('../views/Home.vue') },
+  { path: '/newpassword', name: 'newpassword', component: () => import('../views/newpassword.vue') },
+  { path: '/registerPage', name: 'registerPage', component: () => import('../views/registerPage.vue') },
+  { path: '/navigation', name: 'navigation', component: () => import('../views/system/navigation.vue') },
+  { path: '/mainPage', name: 'mainPage', component: () => import('../views/system/mainPage.vue') },
+  { path: '/game2048', name: 'game2048', component: () => import('../views/games/game2048.vue') }
+]
 
 const router = new VueRouter({
   routes

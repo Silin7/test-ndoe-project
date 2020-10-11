@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // 允许跨域
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", req.headers.origin);
@@ -31,7 +32,6 @@ app.all('*', function(req, res, next) {
   else  next();
 });
 
-// use接口
 app.use('/api/login', loginRouter);
 
 // catch 404 and forward to error handler

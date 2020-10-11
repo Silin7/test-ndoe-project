@@ -1,0 +1,54 @@
+.game2048-body{
+  font-size: 30px;
+  height: 100vh;
+  background-color:rgba(23,44,60);
+  overflow:hidden;
+}
+.game2048-td{
+  width: 100px;
+  height:100px;
+  border-radius:15px;
+}
+.game2048-readme{
+  position:absolute;
+  left: 5%;
+  top:100px;
+  width: 250px;
+}
+.game2048-readme span{
+  font-size: 16px;
+  text-align:center;
+  color: red;
+  font-weight: 800;
+}
+.game2048-readme p{
+  display: block;
+  font-size: 16px;
+  text-indent: 20px;
+  color: #75ffe7;
+}
+.game2048-tab{
+  margin: 100px auto 0;
+  border-radius: 15px;
+  text-align: center;
+  font-weight: bold;
+  background-color:#999;
+}
+
+.game2048-text{
+  position: absolute;
+  right:20%;
+  top: 100px;
+  color: red;
+}
+.game2048-restart{
+  font-size: 22px;
+  margin: 25px;
+  color: red;
+  text-align: center;
+  cursor: pointer;
+} 
+.game2048-score{
+  color: #75ffe7;
+  font-size: 36px;
+}
