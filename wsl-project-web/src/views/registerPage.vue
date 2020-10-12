@@ -3,8 +3,8 @@
   <mmy-componentsy></mmy-componentsy>
   <div class="newpassword-center">
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm repass-word">
-      <el-form-item label="用户名" prop="userName">
-        <el-input type="text" v-model="ruleForm.userName"></el-input>
+      <el-form-item label="用户名" prop="name">
+        <el-input type="text" v-model="ruleForm.name"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input type="password" v-model="ruleForm.password"></el-input>
@@ -23,13 +23,11 @@
 </template>
 
 <script>
+  import api from '@/api/api'
   import mmyComponents from '../components/mmy/index.vue'
   export default {
     components: {
       'mmy-componentsy': mmyComponents
-    },
-    mounted() {
-      this.judgeAccount()
     },
     data() {
       var validateName = (rule, value, callback) => {
@@ -64,12 +62,12 @@
       };
       return {
         ruleForm: {
-          userName: '',
+          name: '',
           password: '',
           checkPass: '',
         },
         rules: {
-          userName: [
+          name: [
             { validator: validateName, trigger: 'blur' }
           ],
           password: [
@@ -82,16 +80,6 @@
       };
     },
     methods: {
-      // 判断是否存在账户，如果存在账户，无法重新注册
-      judgeAccount() {
-        let judgeInformation = localStorage.getItem('loginInformation')
-        if (judgeInformation) {
-          this.$message({ message: '已存在账户，无法重新注册', type: 'warning' });
-          setTimeout(() => {
-            this.$router.push({ name: 'home' })
-          }, 1000);
-        }
-      },
       // 注册确认按钮
       submission() {
         this.$refs['ruleForm'].validate((valid) => {
@@ -105,12 +93,33 @@
       },
       // 存储账户信息
       createAccount() {
-        let loginInformation = { 'userName': this.ruleForm.userName, 'password': this.ruleForm.password }
-        localStorage.setItem('loginInformation', JSON.stringify(loginInformation));
-        this.$message({ message: '注册成功', type: 'success' });
-        setTimeout(() => {
-          this.$router.push({ name: 'home' })
-        }, 1000);
+        let _this = this
+        let registerInformation = { 'name': this.ruleForm.name, 'password': this.ruleForm.password }
+        api.post_register(registerInformation, function(res) {
+          if (res.data.code === 0) {
+            _this.$confirm('用户名确定后将无法更改，您确定要注册吗?', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+            }).then(() => {
+              api.post_register_inster(registerInformation, function(res2) {
+                if (res2.data.code === 0) {
+                  _this.$message({ message: '注册成功', type: 'success' });
+                  setTimeout(() => {
+                    _this.$router.push({ name: 'home' })
+                  }, 1000);
+                }
+              })
+            }).catch(() => {
+              _this.$message({
+                type: 'info',
+                message: '取消注册'
+              });
+            });
+          } else {
+            _this.$message({ message: res.data.msg, type: 'error' });
+          }
+        })
+        
       }
     }
   }

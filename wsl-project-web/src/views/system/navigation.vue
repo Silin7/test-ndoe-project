@@ -52,10 +52,8 @@
 </template>
 
 <script>
-  import checkStatus from '../checkStatus/index.js'
   export default {
     mounted() {
-      mixins: [checkStatus]
       this.diaryShow = true;
       this.noteShow = true;
       this.animationShow = true;

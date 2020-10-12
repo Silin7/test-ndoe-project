@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 // 引入接口路由
-var loginRouter = require('./routes/login');
+var mainRouter = require('./routes');
 
 var app = express();
 
@@ -32,7 +32,7 @@ app.all('*', function(req, res, next) {
   else  next();
 });
 
-app.use('/api/login', loginRouter);
+app.use('/api', mainRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
