@@ -45,7 +45,10 @@ const post_register_inster = (req, res, next) => {
   var addSqlParams = [registerInfo.name, registerInfo.password];
   connection.query(addSql, addSqlParams, function (err, result) {
     if (err) {
-      console.log('[INSERT ERROR] - ', err.message);
+      res.end(JSON.stringify({
+        code: 500,
+        msg: '未知异常，请联系管理员'
+      }))
       return;
     } else {
       res.end(JSON.stringify({
