@@ -98,7 +98,6 @@ export default {
               }
               api.post_login(data, function(res) {
                 if (res.data.code === 0) {
-                  console.log(res.data.code)
                   // _this.$router.push({ 'name': 'navigation' })
                   _this.$router.push({'name': 'navigation'})
                 }

@@ -1,17 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-// register 注册模块
-var registerMoudle = require('./compontent/registerMoudle')
+// 注册，登录模块
+var registerMoudle = require('./compontent/register_login_moudle')
 
 router.post('/register/post_register', registerMoudle.post_register);
 router.post('/register/post_register_inster', registerMoudle.post_register_inster);
-
-
-// login 登录模块
-var loginMoudle = require('./compontent/loginMoudle')
-
-router.get('/login/get_loginInfo', loginMoudle.get_loginInfo);
-router.post('/login/post_login', loginMoudle.post_login);
+router.get('/login/get_loginInfo', registerMoudle.get_loginInfo);
+router.post('/login/post_login', registerMoudle.post_login);
 
 module.exports = router;
