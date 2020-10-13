@@ -30,10 +30,8 @@
 </template>
 
 <script>
-  import checkStatus from '../checkStatus/index.js'
   export default {
     mounted() {
-      mixins: [checkStatus]
       this.getUserName()
     },
     data() {

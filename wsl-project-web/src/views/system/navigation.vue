@@ -71,19 +71,19 @@
       diary() {
         this.diaryShow = !this.diaryShow
         setTimeout(() => {
-          this.$router.push({ name: 'home' })
+          this.$router.push({ name: 'mainPage' })
         }, 1000);
       },
       note() {
         this.noteShow = !this.noteShow
         setTimeout(() => {
-          this.$router.push({ name: 'home' })
+          this.$router.push({ name: 'mainPage' })
         }, 1000);
       },
       animation() {
         this.animationShow = !this.animationShow
         setTimeout(() => {
-          this.$router.push({ name: 'home' })
+          this.$router.push({ name: 'mainPage' })
         }, 1000);
       },
       game() {
