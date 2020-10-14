@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh; box-sizing:border-box; padding: 0 200px; background-color: #ccc">
+  <div class="bs_bx page_box">
     <el-container>
       <!-- <el-header>：顶栏容器 -->
       <el-header class="main-header">
@@ -9,7 +9,7 @@
         <el-dropdown :show-timeout="0" placement="bottom">
           <div class="headRightBox">
             <span class="el-dropdown-link">
-              <img class="txImg" src="~@/assets/头像/tx.jpeg">
+              <img class="txImg" src="~@/assets/images/tx.jpeg">
             </span>
             <span>{{userName}}</span>
           </div>
@@ -26,6 +26,12 @@
       <!-- <el-footer>：底栏容器 -->
       <el-footer class="main-footer">Footer</el-footer>
     </el-container>
+    <!-- 装饰 -->
+    <template name="decorate">
+      <img src="@/assets/images/qp01.png" alt="" class="diaryPageqp01">
+      <img src="@/assets/images/qp02.png" alt="" class="diaryPageqp02">
+      <img src="@/assets/images/qp03.png" alt="" class="diaryPageqp03">
+    </template>
   </div>
 </template>
 
@@ -58,3 +64,27 @@
     }
   };
 </script>
+
+<style>
+  .page_box {
+    height: 100%;
+    box-sizing:border-box;
+    padding: 0 20vw;
+    background-color: #C0BEB5;
+  }
+  .diaryPageqp01 {
+    position: absolute;
+    top: 10%;
+    left: 80px;
+  }
+  .diaryPageqp02 {
+    position: absolute;
+    top: 30%;
+    right: 0px;
+  }
+  .diaryPageqp03 {
+    position: absolute; 
+    top: 60%;
+    left: 20px;
+  }
+</style>
