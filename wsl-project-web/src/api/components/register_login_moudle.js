@@ -17,6 +17,14 @@ let login = {
       return Promise.reject(error)
     })
   },
+  // 注册：修改密码
+  post_register_change: function (params, cb) {
+    axios.post('/register/post_register_change', params).then((res) => {
+      cb(res)
+    }).catch((error) => {
+      return Promise.reject(error)
+    })
+  },
   // 登录：判断账号是否存在
   get_loginInfo: function (cb) {
     axios.get('/login/get_loginInfo').then((res) => {

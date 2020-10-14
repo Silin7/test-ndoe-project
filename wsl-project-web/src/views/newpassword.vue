@@ -3,8 +3,8 @@
   <mmy-componentsy></mmy-componentsy>
   <div class="newpassword-center">
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm repass-word">
-      <el-form-item label="用户名" prop="userName">
-        <el-input type="text" v-model="userName" readonly></el-input>
+      <el-form-item label="用户名" prop="name">
+        <el-input type="text" v-model="name"></el-input>
       </el-form-item>
       <el-form-item label="旧密码" prop="oldPass">
         <el-input type="password" v-model="ruleForm.oldPass"></el-input>
@@ -26,31 +26,26 @@
 </template>
 
 <script>
+  import api from '@/api/api'
   import mmyComponents from '../components/mmy/index.vue'
   export default {
     components: {
       'mmy-componentsy': mmyComponents
     },
     mounted () {
-      sessionStorage.setItem("logonStatus", "0")
-      this.getInformation()
     },
     data() {
       var validateoldPass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入旧密码'));
-        } else if (value !== this.password) {
-          callback(new Error('密码输入错误'));
-        } else {
+        }else {
           callback();
         }
       };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入新密码'));
-        } else if (value === this.password) {
-          callback(new Error('不能使用原密码'));
-        } else if (!/^[0-9A-Za-z]{6,}$/ .test(value)) {
+        }else if (!/^[0-9A-Za-z]{6,}$/ .test(value)) {
           callback(new Error('密码长度不能低于6位'));
         } else {
           if (this.ruleForm.checkPass !== '') {
@@ -69,8 +64,7 @@
         }
       };
       return {
-        userName: '',
-        password: '',
+        name: '',
         ruleForm: {
           oldPass: '',
           newPass: '',
@@ -90,19 +84,7 @@
       };
     },
     methods: {
-      // 获取本地存储信息
-      getInformation() {
-        let loginInformation = localStorage.getItem('loginInformation')
-        loginInformation = JSON.parse(loginInformation)
-        if (!loginInformation || loginInformation === null || loginInformation === '') {
-          alert('账户丢失，前往注册页面进行注册')
-              this.$router.push({ name: 'registerPage' })
-
-        } else {
-          this.userName = loginInformation.userName
-          this.password = loginInformation.password
-        }
-      },
+      // 修改按钮
       submission() {
         this.$refs['ruleForm'].validate((valid) => {
           if (valid) {
@@ -114,12 +96,29 @@
         });
       },
       changePass() {
-        let loginInformation = { 'userName': this.userName, 'password': this.ruleForm.newPass }
-        localStorage.setItem('loginInformation', JSON.stringify(loginInformation));
-        this.$message({ message: '修改成功', type: 'success' });
-        setTimeout(() => {
-          this.$router.push({ name: 'home' })
-        }, 1000);
+        let _this = this
+        let data = { 'name': this.name, 'password': this.ruleForm.oldPass, 'newPassword': this.ruleForm.newPass, 'state': 1 }
+        api.post_register(data, function(res) {
+          if(res && res.data.code === 0) {
+            let data2 = {
+              'id': res.data.data.id,
+              'newPass': _this.ruleForm.newPass,
+            }
+            api.post_register_change(data2, function(res2) {
+              if (res2 && res2.data.code === 0) {
+                console.log(res)
+                _this.$message.success('操作成功');
+                setInterval(() => {
+                  _this.$router.push({'name': 'home'})
+                },1000)
+              } else {
+                _this.$message.error(res2.data.msg)
+              }
+            })
+          } else {
+            _this.$message.error(res.data.msg);
+          }
+        })
       }
     }
   }

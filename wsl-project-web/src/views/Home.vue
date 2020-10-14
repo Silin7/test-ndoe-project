@@ -89,19 +89,20 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           api.get_loginInfo(function(res) {
-            if(res.data.code !== 0 || res.data.data.length === 0) {
-              alert("您还没有注册账号，请先注册哟！")
-            } else {
+            if(res && res.data.code === 0) {
               let data = {
                 name: _this.ruleForm.loginName,
                 password: _this.ruleForm.pass,
               }
               api.post_login(data, function(res) {
                 if (res.data.code === 0) {
-                  // _this.$router.push({ 'name': 'navigation' })
                   _this.$router.push({'name': 'navigation'})
+                } else {
+                  _this.$message.error(res.data.msg)
                 }
               })
+            } else {
+              _this.$message.error(res.data.msg)
             }
           })
         } else {

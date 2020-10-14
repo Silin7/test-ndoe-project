@@ -94,7 +94,7 @@
       // 存储账户信息
       createAccount() {
         let _this = this
-        let registerInformation = { 'name': this.ruleForm.name, 'password': this.ruleForm.password }
+        let registerInformation = { 'name': this.ruleForm.name, 'password': this.ruleForm.password, 'state': 0 }
         api.post_register(registerInformation, function(res) {
           if (res.data.code === 0) {
             _this.$confirm('用户名确定后将无法更改，您确定要注册吗?', {
