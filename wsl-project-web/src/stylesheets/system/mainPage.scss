@@ -30,11 +30,15 @@
   }
 }
 .main-container {
-  height: 80vh !important;
+  height: 84vh !important;
   overflow: auto;
   background-color: rgb(155, 193, 243);
 }
 .main-footer {
-  height: 14vh !important;
+  height: 10vh !important;
+  letter-spacing: 2px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
   background-color: #B3C0D1;
 }

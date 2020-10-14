@@ -24,7 +24,7 @@
           11111111
       </el-main>
       <!-- <el-footer>：底栏容器 -->
-      <el-footer class="main-footer">Footer</el-footer>
+      <el-footer class="main-footer">保持热爱奔赴山海，各自努力顶峰相见！</el-footer>
     </el-container>
     <!-- 装饰 -->
     <template name="decorate">
@@ -38,18 +38,13 @@
 <script>
   export default {
     mounted() {
-      this.getUserName()
     },
     data() {
       return {
-        userName: '',
+        userName: '王思林',
       }
     },
     methods: {
-      // 获取头像用户名
-      getUserName() {
-        this.userName = JSON.parse(localStorage.getItem('loginInformation')).userName
-      },
       // 修改密码
       changePass() {
         this.$router.push({'name': 'newpassword'})
