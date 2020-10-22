@@ -34,9 +34,7 @@ const post_register = (req, res, next) => {
             msg: 'success'
           }))
         }
-      }
-      // state为1：修改密码
-      if (data.state && data.state == 1) {
+      } else if (data.state && data.state == 1) {
         if (result.length > 0) {
           if (result[0].password === data.password) {
             if (result[0].password === data.newPassword) {
@@ -63,6 +61,11 @@ const post_register = (req, res, next) => {
             msg: '用户名输入错误'
           }))
         }
+      } else {
+        res.end(JSON.stringify({
+          code: 500,
+          msg: '未知异常，请联系管理员'
+        }))
       }
     }
   });

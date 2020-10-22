@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+/* post方法 */
+var bodyParser = require('body-parser');
+
 
 // 引入接口路由
 var mainRouter = require('./routes');
@@ -19,6 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 添加json解析
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 // 允许跨域
 app.all('*', function(req, res, next) {
