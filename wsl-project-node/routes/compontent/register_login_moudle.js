@@ -3,7 +3,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '123456',
+  password: 'root',
   database: 'test_library' 
 });
 
@@ -22,7 +22,7 @@ const post_register = (req, res, next) => {
       return;
     } else {
       // state为0：判断账号是否可以注册
-      if (data.state && data.state == 0) {
+      if (data.state == 0) {
         if (result.length > 0) {
           res.end(JSON.stringify({
             code: 500,
@@ -34,7 +34,7 @@ const post_register = (req, res, next) => {
             msg: 'success'
           }))
         }
-      } else if (data.state && data.state == 1) {
+      } else if (data.state == 1) {
         if (result.length > 0) {
           if (result[0].password === data.password) {
             if (result[0].password === data.newPassword) {
@@ -72,7 +72,8 @@ const post_register = (req, res, next) => {
 }
 // 注册：将注册信息写入数据库
 const post_register_inster = (req, res, next) => {
-  var addSql = 'INSERT INTO login_information(Id,name,password,number) VALUES(0,?,?,0)';
+  console.log(req.body)
+  var addSql = 'INSERT INTO `login_information` (`id`, `userName`, `password`, `name`, `gender`, `age`, `emotional`, `height`, `weight`, `nation`, `address`, `school`, `hobby`, `occupation`, `personalSignature`) VALUES (NULL, ?, ?, \'\', \'\', \'\', \'\', \'\', \'\', \'\', \'\', \'\', \'\', \'\', \'\');';
   var addSqlParams = [req.body.name, req.body.password];
   connection.query(addSql, addSqlParams, function (err, result) {
     if (err) {
