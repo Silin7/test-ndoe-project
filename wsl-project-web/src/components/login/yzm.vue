@@ -1,5 +1,5 @@
  <template>
-  <div class="s-canvas">
+  <div class="s-canvas" id="xxx">
       <canvas id="s-canvas" :width="contentWidth" :height="contentHeight" :identifyCode="identifyCode"></canvas>
   </div>
 </template>
@@ -132,7 +132,7 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
   .s-canvas {
     height: 38px;
   }

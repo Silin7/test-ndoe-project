@@ -1,8 +1,7 @@
 <template>
-  <!-- isRouterAlive页面刷新不重载 -->
   <div class="home" v-if="isRouterAlive">
     <div class="sea">
-      <p class="title">MI</p>
+      <p class="title">铜谷中学莎莎老师课堂点名系统</p>
       <span class="wave"></span>
       <span class="wave"></span>
     </div>
@@ -15,28 +14,28 @@
           <el-form-item label="账号：" prop="loginName">
             <el-input v-model.number="ruleForm.loginName"></el-input>
           </el-form-item>
-          <el-form-item label="密码：" prop="pass">
-            <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+          <el-form-item label="密码：" prop="password">
+            <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="验证码：" prop="yzPass">
-            <el-input v-model="ruleForm.yzPass" clearable autocomplete="off" style="width: 180px"></el-input>
+            <el-input v-model="ruleForm.yzPass" clearable autocomplete="off" style="width: 220px"></el-input>
             <span @click="randomStr">
               <verification-code class="canvasYzm" :identifyCode="randomNumber"></verification-code>
             </span>
           </el-form-item>
           <el-form-item>
-            <div style="margin-top: 16px; margin-left: 40%">
-              <el-button @click="resetForm('ruleForm')">重置</el-button>
+            <!-- style="margin-top: 16px; margin-left: 40%"  -->
+            <div class="loginBtn">
+              <el-button @click="resetForm('ruleForm')">重 置</el-button>
               <span style="display: inline-block; margin-left: 30px;">
-                <el-button type="primary" @click="submitForm('ruleForm')" >登录</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')" >登 录</el-button>
               </span>
             </div>
           </el-form-item>
         </el-form>
       </div>
       <div class="center_bottom">
-        <router-link to="./registerPage" style="color: #409EFF; margin-right:10px;">注册账号</router-link>
-        <router-link to="./newpassword" style="color: #909399; margin-left:10px;">修改密码</router-link>
+        <router-link to="./newpassword" class="changePss">修改密码</router-link>
       </div>
     </div>
     <div class="bottom">
@@ -45,116 +44,213 @@
 </template>
 
 <script>
-import api from '@/api/api'
-import verificationCode from '../components/login/yzm.vue'
-export default {
-  name: 'Home',
-  components: {
-    'verification-code': verificationCode
-  },
-  mounted () {
-    this.randomStr()
-  },
-  data() {
-    return {
-      isRouterAlive: true,
-      local: {
-        name: '',
-        password: ''
-      },
-      ruleForm: {
-        loginName: '',
-        pass: '',
-        yzPass: ''
-      },
-      randomNumber: '',
-      rules: {
-        loginName: [ {required: true, message: '请输入账号', trigger: 'blur'} ],
-        pass: [ {required: true, message: '请输入密码', trigger: 'blur'} ],
-        yzPass: [ {required: true, message: '请输入验证码', trigger: 'blur'} ]
-      }
-    };
-  },
-  methods: {
-    // 页面刷新
-    reload () {
-      this.isRouterAlive = false;
-      this.$nextTick(() => {
-        this.isRouterAlive = true;
-      })
+  import api from '@/api/api'
+  import verificationCode from '@/components/login/yzm.vue'
+  export default {
+    components: {
+      'verification-code': verificationCode
     },
-    // 确认按钮
-    submitForm(formName) {
-      let _this = this
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          api.get_loginInfo(function(res) {
-            if(res && res.data.code === 0) {
-              let data = {
-                name: _this.ruleForm.loginName,
-                password: _this.ruleForm.pass,
-              }
-              api.post_login(data, function(res) {
-                if (res.data.code === 0) {
-                  _this.$router.push({'name': 'navigation'})
-                } else {
-                  _this.$message.error(res.data.msg)
-                }
-              })
-            } else {
-              _this.$message.error(res.data.msg)
-            }
-          })
-        } else {
-          this.randomStr()
-          return false;
+    mounted () {
+      this.randomStr()
+    },
+    data() {
+      return {
+        isRouterAlive: true,
+        local: {
+          name: '',
+          password: ''
+        },
+        ruleForm: {
+          loginName: '',
+          password: '',
+          yzPass: ''
+        },
+        randomNumber: '',
+        rules: {
+          loginName: [ {required: true, message: '请输入账号', trigger: 'blur'} ],
+          password: [ {required: true, message: '请输入密码', trigger: 'blur'} ],
+          yzPass: [ {required: true, message: '请输入验证码', trigger: 'blur'} ]
         }
-      });
+      };
     },
-    // 重置
-    resetForm(formName) {
-      this.reload()
-      this.$refs[formName].resetFields();
-    },
-    // 验证码
-    random(max,min) {
-      return Math.round(Math.random()*(max-min)+min);
-    },
-    randomStr() {
-      //创建一个空字符，用于存放随机数/字母
-      var strData = "";
-      //生成随机字符库 (验证码四位，随机数三种，取公倍数12,所以循环4次。也可以是120次，1200次。)
-      for(var i=0;i<4;i++){
-        var num = this.random(0,9);//生成0-9的随机数
-        var az = String.fromCharCode(this.random(97,122));//生成a-z
-        var AZ = String.fromCharCode(this.random(65,90));//生成A-Z
-        strData = strData + num + az + AZ;//将生成的字符进行字符串拼接
-      }
-      this.randomNumber = ''
-      // 开始真正的随机(从随机字符库中随机取出四个)
-      for(var i=0;i<4;i++){
-        this.randomNumber += strData[this.random(0,strData.length-1)]
+    methods: {
+      // 页面刷新
+      reload () {
+        this.isRouterAlive = false;
+        this.$nextTick(() => {
+          this.isRouterAlive = true;
+        })
+      },
+      // 登录
+      submitForm(formName) {
+        let _this = this
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let data = {
+              name: _this.ruleForm.loginName,
+              password: _this.ruleForm.password,
+            }
+            api.signIn(data, function (res) {
+              if (res && res.data.code === 0) {
+                _this.$cookies.set('pass', true, "1d")
+                _this.$router.push({ name: 'mainPage' })
+                _this.$message.success(res.data.msg)
+              } else {
+                _this.$message.error(res.data.msg)
+              }
+            })
+          } else {
+            this.randomStr()
+            return false;
+          }
+        });
+      },
+      // 重置
+      resetForm(formName) {
+        this.reload()
+        this.$refs[formName].resetFields();
+      },
+      // 验证码
+      random(max,min) {
+        return Math.round(Math.random()*(max-min)+min);
+      },
+      randomStr() {
+        //创建一个空字符，用于存放随机数/字母
+        var strData = "";
+        //生成随机字符库 (验证码四位，随机数三种，取公倍数12,所以循环4次。也可以是120次，1200次。)
+        for(var i=0;i<4;i++){
+          var num = this.random(0,9);//生成0-9的随机数
+          var az = String.fromCharCode(this.random(97,122));//生成a-z
+          var AZ = String.fromCharCode(this.random(65,90));//生成A-Z
+          strData = strData + num + az + AZ;//将生成的字符进行字符串拼接
+        }
+        this.randomNumber = ''
+        // 开始真正的随机(从随机字符库中随机取出四个)
+        for(var i=0;i<4;i++){
+          this.randomNumber += strData[this.random(0,strData.length-1)]
+        }
       }
     }
   }
-}
 </script>
 
-<style lang="scss" scoped>
-  html,body {
-    font-family:-apple-system,
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    "PingFang SC",
-    "Hiragino Sans GB",
-    "WenQuanYi Micro Hei",
-    "Microsoft Yahei",
-    sans-serif;
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background-color:#3881c6;
-  }
+<style>
+.home {
+  position: relative;
+}
+.top {
+  height: 38vh;
+  width: 100vw;
+  background: #4781CA;
+  overflow: hidden;
+}
+.top p {
+  color: #FFFFFF;
+  font-size: 30px;
+  margin: 8% 0 0 10%;
+}
+.home-center {
+  position: absolute;
+  top: calc((100vh - 450px) / 2);
+  left: calc(((100vw - 850px) / 2));
+  width: 850px;
+  height: 450px;
+  background-color: #FFFFFF;
+  border: 1px solid #cccccc;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+}
+.center_left {
+  width: 30%;
+  height: 286px;
+  margin: 0 auto; /*水平居中*/
+  position: relative;
+  top: 50%; /*偏移*/
+  margin-top: -143px;
+  margin-left: 30px;
+}
+.center_right {
+  width: 60%;
+  height: 286px;
+  margin: 0 auto; /*水平居中*/
+  position: relative;
+  top: 50%; /*偏移*/
+  margin-top: -143px;
+  margin-right: 30px;
+  padding: 20px 0;
+}
+.center_bottom {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+}
+.bottom {
+  height: 62vh;
+  width: 100vw;
+  background: #FFFFFF;
+}
+.canvasYzm {
+  position: absolute;
+  top: 1px;
+  right: 6px;
+}
+
+
+.sea {
+  width:100vw;
+  height:38vh;
+  background-color:whitesmoke;
+  background-image:linear-gradient(
+        darkblue,rgba(255,255,255,0) 80%,rgba(255,255,255,0.5));
+  border-radius:5px;
+  box-shadow:0 2px 30px rgba(0,0,0,0.2);
+  position:relative;
+  overflow:hidden;
+}
+.sea .title {
+  color:white;
+  font-size:24px;
+  text-align:center;
+  line-height:250px;
+  text-transform:uppercase;
+  letter-spacing:0.4em;
+  position:absolute;
+  z-index:1;
+  width:100%;
+}
+.sea .wave {
+  position:absolute;
+  width:120%;
+  height:100%;
+  background:deepskyblue;
+  filter:opacity(0.1);
+  animation:drift linear infinite;
+  transform-origin:50% 48%;
+}
+.sea .wave:nth-of-type(1) {
+  animation-duration:5s;
+}
+.sea .wave:nth-of-type(2) {
+  animation-duration:7s;
+}
+.sea .wave:nth-of-type(3) {
+  animation-duration:9s;
+  background-color:orangered;
+  filter:opacity(0.1);
+}
+@keyframes drift {
+  from {
+  transform:rotate(360deg);
+}
+}
+
+.loginBtn {
+  display: flex;
+  justify-content: flex-start;
+}
+.changePss {
+  font-size: 12px;
+  color: #666666;
+  letter-spacing: 2px;
+}
 </style>

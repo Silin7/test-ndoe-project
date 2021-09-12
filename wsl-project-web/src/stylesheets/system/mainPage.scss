@@ -1,44 +1,188 @@
-.el-header {
-  background-color: #B3C0D1;
-  color: #333;
-  line-height: 60px;
+// header
+.main-header {
+  height: 10vh !important;
+  margin: 30px 0;
   padding-left: 0px;
+  color: #333;
+  background-color: #F5F4EF;
   display: flex;
   justify-content: space-between;
-}
-.main-header {
-  height: 6vh !important;
   font-size: 12px;
-  text-align: right;
-}
-.headLiftBox {
-  width: 200px;
-  height: 100%;
-  background-color: rgb(236, 140, 140);
-}
-.headRightBox {
-  display: flex;
-  height: 100%;
-  width: 100px;
-  justify-content: flex-end;
-  align-items: center;
-  .txImg {
-    width: 30px;
-    height: 30px;
+  position: relative;
+  .headRightBox {
+    height: 100%;
+    width: 100%;
+    padding-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .txImg {
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .el-dropdown-Information {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-left: 10px;
+      height: 50px;
+      .txName {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .txAutograph {
+        height: 50px;
+        display: flex;
+        flex-flow: column;
+        .txAutographInfo1 {
+          height: 25px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          font-size: 15px;
+          font-weight: 700;
+          letter-spacing: 2px;
+        }
+        .txAutographInfo2 {
+          height: 25px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          font-size: 12px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  .diaryPage-circle {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    margin-right: 10px;
+    background-color: #F69491;
+    position: absolute;
+    top: 2.5vh;
+    right: -25px;
+    opacity: 0.8;
   }
 }
+
+// main
 .main-container {
-  height: 84vh !important;
-  overflow: auto;
-  background-color: rgb(155, 193, 243);
+  height: 80vh !important;
+  padding: 0;
+  background-color: #9bc1f3;
+  overflow-y: auto;
+  .newDiary {
+    height: 6vh !important;
+    background-color: #F5F4EF;
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    .xjDiary {
+      display: flex;
+      align-items: center;
+        .xjwz {
+        cursor: pointer;
+        display: inline-block;
+        height: 32px;
+        line-height: 32px;
+        margin-left: 10px;
+        font-weight: 700;
+      }
+    }
+  }
+  .journal-content {
+    height: 70vh;
+    background-size: 100% 100%;
+    padding: 10%;
+    position: relative;
+    .seveDiary {
+      position: absolute;
+      bottom: 3px;
+      right: 45%;
+    }
+  }
+  .diaryList {
+    background-color: #F5F4EF;
+    box-sizing: border-box;
+    padding: 20px 0px 32px 0px;
+    overflow: hidden;
+    position: relative;
+    // display: flex;
+    // justify-content: center;
+    .diaryListItem:hover {
+      background-color: rgba(245, 177, 166, 0.384);
+    }
+    .diaryListItem {
+      cursor: pointer;
+      margin: 0 4%;
+      width: 92%;
+      height: 8vh;
+      background-color: rgb(253, 252, 246);
+      margin-bottom: 10px;
+      border-radius: 5px;
+      padding: 10px;
+      .listItemSpan1 {
+        display: block;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .listItemSpan2 {
+        width: 100%; 
+        display: block;
+        font-size: 12px;
+        padding-left: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .seeMore {
+      position: absolute;
+      bottom: 12px;
+      right: 48%;
+    }
+  }
+  .diaryList:after,.diaryList:before{
+    content: '';
+    display: block;
+    width: 100%;
+    position: absolute;
+    border-top: 15px dotted #C0BEB5;
+    transform:translateY(-50%);
+  }
+  .diaryList:after{
+    top:0;
+    transform:translateY(-50%);
+  }
+  .diaryList:before{
+    bottom: 0;
+    transform:translateY(50%);
+  }
 }
+
+// footer
 .main-footer {
-  height: 10vh !important;
-  letter-spacing: 2px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
+  height: 14vh !important;
   background-color: #B3C0D1;
+}
+.diaryPageqp01 {
+  position: absolute;
+  top: 10%;
+  left: 80px;
+}
+.diaryPageqp02 {
+  position: absolute;
+  top: 30%;
+  right: 0px;
+}
+.diaryPageqp03 {
+  position: absolute;
+  top: 60%;
+  left: 120px;
 }

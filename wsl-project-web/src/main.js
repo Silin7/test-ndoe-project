@@ -10,10 +10,12 @@ import "./stylesheets/animate/animate.min.css"
 import "./stylesheets/home.scss"
 import "./stylesheets/newpassword.scss"
 import "./stylesheets/system/mainPage.scss"
-import "./stylesheets/games/game2048.css"
 import axios from 'axios'
 
 Vue.prototype.$http = axios
+
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
 
 Vue.use(ElementUI);
 
